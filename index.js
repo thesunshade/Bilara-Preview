@@ -139,7 +139,7 @@ function buildSutta(slug) {
 
         html += `${openHtml}<span class="segment" id ="${segment}"><span class="pli-lang" lang="pi">${root_text[segment] ? root_text[segment] : ""}</span><span class="eng-lang" lang="en">${draftTranslation[segment]}</span></span>${closeHtml}\n\n`;
       });
-      const scLink = `<p class="sc-link"><a href="https://suttacentral.net/${slug}/en/${translator}">On SuttaCentral.net</a></p>`;
+      const scLink = `<p class="sc-link"><a href="https://suttacentral.net/${uid}">On SuttaCentral.net</a></p>`;
 
       suttaArea.innerHTML = scLink + html;
       document.title = `${suttaplex.suttaplex.acronym} ${suttaplex.bilara_root_text.title}: ${suttaplex.bilara_translated_text.title}`;

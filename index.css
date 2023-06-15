@@ -7,7 +7,7 @@
   --dark-gray: #5a5a5a;
   --light-gray: #8f8f8f;
   --dark-blue: #562d0a;
-  --blue: #3434be;
+  --blue: #c4470d;
 }
 
 body {
@@ -25,6 +25,7 @@ body.dark {
   color: var(--light-gray);
   text-align: center;
   margin-bottom: .2rem;
+  padding: 0 4rem
 }
 
 #form {
@@ -40,7 +41,7 @@ body.dark {
   border: 1px solid;
   background-color: var(--off-white);
   color: var(--dark-gray);
-  width: 20rem;
+  width: 30rem;
 }
 
 .dark #citation {
@@ -112,6 +113,10 @@ p {
   margin-top: 0rem;
   margin-bottom: 0.1rem;
   margin-left: 0rem;
+}
+
+header ul {
+  font-size: .8rem;
 }
 
 .lists {
@@ -218,7 +223,7 @@ a {
 }
 
 .dark a {
-  color: rgb(122, 122, 249);
+  color: var(--blue);
 }
 
 dt {
