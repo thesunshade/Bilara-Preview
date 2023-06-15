@@ -89,6 +89,7 @@ function buildSutta(slug) {
     errorResponse();
   }
 
+  const translationLanguage = githubUrl.match(/translation\/([a-z]+)/)[1];
   const uid = uidArray[1];
 
   let translator = "";
@@ -149,7 +150,7 @@ function buildSutta(slug) {
         <span class="segment" id ="${segment}">
         <span class="pli-lang" lang="pi">${root_text[segment] ? root_text[segment] : ""}</span>
         <span class="eng-lang" lang="en">${translation_text[segment] ? translation_text[segment] : ""}</span>
-        <span class="trans-lang" lang="en"><span class="ids">${cleanIds(segment)}</span>${draftTranslation[segment]}</span>
+        <span class="trans-lang" lang="${translationLanguage}"><span class="ids">${cleanIds(segment)} </span>${draftTranslation[segment]}</span>
         </span>${closeHtml}\n\n`;
       });
       const scLink = `<p class="sc-link"><a href="https://suttacentral.net/${uid}">On SuttaCentral.net</a></p>`;
