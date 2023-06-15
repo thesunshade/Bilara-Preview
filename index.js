@@ -78,7 +78,7 @@ form.addEventListener("submit", e => {
 citation.value = document.location.search.replace("?q=", "").replace(/%20/g, "").replace(/\s/g, "");
 
 function buildSutta(slug) {
-  const githubUrl = slug.replace("https://github.com/suttacentral/bilara-data/blob/unpublished", "https://raw.githubusercontent.com/suttacentral/bilara-data/unpublished");
+  const githubUrl = slug.replace(/%2F/g, "/").replace("https://github.com/suttacentral/bilara-data/blob/unpublished", "https://raw.githubusercontent.com/suttacentral/bilara-data/unpublished");
   const uidArray = githubUrl.match(/([a-z0-9.]+)_translation/);
 
   if (!uidArray) {
