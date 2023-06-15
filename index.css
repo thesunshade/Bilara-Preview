@@ -166,7 +166,7 @@ p.sc-link {
 }
 
 span.pli-lang,
-span.eng-lang {
+span.trans-lang {
   display: block;
 }
 
@@ -235,12 +235,35 @@ dt {
   position: fixed;
   right: 10px;
   top: 10px;
+  display: flex;
+  flex-direction: column;
+  row-gap: .5rem;
 }
 
 #sutta {
   max-width: 45rem;
   margin: auto;
   line-height: 1.5;
+}
+
+.ids {
+  font-size: .8rem;
+  padding-right: .5rem;
+  color: var(--dark-gray)
+}
+
+.hide-ids .ids {
+  display: none
+}
+
+.eng-lang {
+  font-size: .9rem;
+  display: block;
+  color: var(--dark-gray);
+}
+
+.dark .eng-lang {
+  color: var(--light-gray);
 }
 
 .hide-pali p .pli-lang,
@@ -251,7 +274,7 @@ dt {
   display: none !important;
 }
 
-#sutta.hide-pali p span.eng-lang {
+#sutta.hide-pali p span.trans-lang {
   display: inline !important;
 }
 
@@ -259,12 +282,35 @@ dt {
   margin: 0px 0px 0.8rem 0rem;
 }
 
-#sutta.hide-pali blockquote.gatha p span.verse-line span.eng-lang {
+#sutta.hide-pali blockquote.gatha p span.verse-line span.trans-lang {
   display: block !important;
   margin-bottom: 0rem;
 }
 
-span.eng-lang {
+/* Hide English */
+.hide-english p .eng-lang,
+.hide-english h1 .eng-lang,
+.hide-english h2 .eng-lang,
+.hide-english h3 .eng-lang,
+.hide-english h4 .eng-lang,
+.hide-english li .eng-lang {
+  display: none !important;
+}
+
+#sutta.hide-english.hide-pali p span.trans-lang {
+  display: inline !important;
+}
+
+#sutta.hide-english p {
+  margin: 0px 0px 0.8rem 0rem;
+}
+
+#sutta.hide-english blockquote.gatha p span.verse-line span.trans-lang {
+  display: block !important;
+  margin-bottom: 0rem;
+}
+
+span.trans-lang {
   margin-bottom: 0.4rem;
 }
 
@@ -378,7 +424,7 @@ a:hover {
 }
 
 .side-by-side .pli-lang,
-.side-by-side .eng-lang {
+.side-by-side .trans-lang {
   width: 48%;
 }
 

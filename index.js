@@ -78,6 +78,10 @@ form.addEventListener("submit", e => {
 citation.value = document.location.search.replace("?q=", "").replace(/%20/g, "").replace(/\s/g, "");
 
 function buildSutta(slug) {
+  function cleanIds(id) {
+    return id.replace(/^[a-z].+?\d+?:/, "");
+  }
+
   const githubUrl = slug.replace(/%2F/g, "/").replace("https://github.com/suttacentral/bilara-data/blob/unpublished", "https://raw.githubusercontent.com/suttacentral/bilara-data/unpublished");
   const uidArray = githubUrl.match(/([a-z0-9.]+)_translation/);
 
@@ -113,7 +117,11 @@ function buildSutta(slug) {
     }
   }
 
-  let html = `<div class="button-area"><button id="hide-pali" class="hide-button">Toggle Pali</button></div>`;
+  let html = `<div class="button-area">
+  <button id="hide-pali" class="hide-button">Toggle Pali</button>
+  <button id="hide-english" class="hide-button">Toggle English</button>
+  <button id="hide-ids" class="hide-button">Toggle Ids</button>
+  </div>`;
 
   const draftTranslationResponse = fetch(githubUrl).then(response => response.json());
 
@@ -137,7 +145,12 @@ function buildSutta(slug) {
           openHtml = openHtml.replace(/^<span class='verse-line'>/, "<br><span class='verse-line'>");
         }
 
-        html += `${openHtml}<span class="segment" id ="${segment}"><span class="pli-lang" lang="pi">${root_text[segment] ? root_text[segment] : ""}</span><span class="eng-lang" lang="en">${draftTranslation[segment]}</span></span>${closeHtml}\n\n`;
+        html += `${openHtml}
+        <span class="segment" id ="${segment}">
+        <span class="pli-lang" lang="pi">${root_text[segment] ? root_text[segment] : ""}</span>
+        <span class="eng-lang" lang="en">${translation_text[segment]}</span>
+        <span class="trans-lang" lang="en"><span class="ids">${cleanIds(segment)}</span>${draftTranslation[segment]}</span>
+        </span>${closeHtml}\n\n`;
       });
       const scLink = `<p class="sc-link"><a href="https://suttacentral.net/${uid}">On SuttaCentral.net</a></p>`;
 
@@ -145,6 +158,8 @@ function buildSutta(slug) {
       document.title = `${suttaplex.suttaplex.acronym} ${suttaplex.bilara_root_text.title}: ${suttaplex.bilara_translated_text.title}`;
 
       toggleThePali();
+      toggleTheEnglish();
+      toggleTheIds();
     })
     .catch(error => {
       errorResponse();
@@ -185,6 +200,53 @@ function toggleThePali() {
     } else {
       suttaArea.classList.remove("hide-pali");
       localStorage.paliToggle = "show";
+    }
+  });
+}
+
+function toggleTheEnglish() {
+  const hideButton = document.getElementById("hide-english");
+
+  // initial state
+  if (localStorage.englishToggle) {
+    if (localStorage.englishToggle === "hide") {
+      suttaArea.classList.add("hide-english");
+    }
+  } else {
+    localStorage.englishToggle = "show";
+  }
+
+  hideButton.addEventListener("click", () => {
+    if (localStorage.englishToggle === "show") {
+      suttaArea.classList.add("hide-english");
+      localStorage.englishToggle = "hide";
+      document.querySelector("body").classList.remove("side-by-side");
+    } else {
+      suttaArea.classList.remove("hide-english");
+      localStorage.englishToggle = "show";
+    }
+  });
+}
+
+function toggleTheIds() {
+  const hideButton = document.getElementById("hide-ids");
+
+  // initial state
+  if (localStorage.idsToggle) {
+    if (localStorage.idsToggle === "hide") {
+      suttaArea.classList.add("hide-ids");
+    }
+  } else {
+    localStorage.idsToggle = "show";
+  }
+
+  hideButton.addEventListener("click", () => {
+    if (localStorage.idsToggle === "show") {
+      suttaArea.classList.add("hide-ids");
+      localStorage.idsToggle = "hide";
+    } else {
+      suttaArea.classList.remove("hide-ids");
+      localStorage.idsToggle = "show";
     }
   });
 }
