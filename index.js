@@ -148,7 +148,7 @@ function buildSutta(slug) {
         html += `${openHtml}
         <span class="segment" id ="${segment}">
         <span class="pli-lang" lang="pi">${root_text[segment] ? root_text[segment] : ""}</span>
-        <span class="eng-lang" lang="en">${translation_text[segment]}</span>
+        <span class="eng-lang" lang="en">${translation_text[segment] ? translation_text[segment] : ""}</span>
         <span class="trans-lang" lang="en"><span class="ids">${cleanIds(segment)}</span>${draftTranslation[segment]}</span>
         </span>${closeHtml}\n\n`;
       });
