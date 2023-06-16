@@ -5,11 +5,13 @@ const copyLinkButton = document.getElementById("copy-link");
 const bodyTag = document.querySelector("body");
 const previous = document.getElementById("previous");
 const next = document.getElementById("next");
+const INSTRUCTION_TEXT = `<p>Please enter the url from the Bilar app or the url from the GitHub unpublished branch. It will look something like this:</p>
+<p><code>https://bilara.suttacentral.net/translation/an3.35_translation-es-maggatr</code></p>
+<p>or</p>
+<p><code>https://github.com/suttacentral/bilara-data/blob/unpublished/translation/es/maggatr/sutta/an/an3/an3.35_translation-es-maggatr.json</code></p>`;
 
 const welcomeText = `<div class="instructions">
-<p>The complete URL must be for your draft translation on the official unpublished repository on <code>/suttacentral/bilara-data/</code>.</p>
-<p>It will look something like this:</p>
-<p><code>https://github.com/suttacentral/bilara-data/blob/unpublished/translation/es/maggatr/sutta/an/an3/an3.35_translation-es-maggatr.json<code></p>
+${INSTRUCTION_TEXT}
 </div>
 `;
 
@@ -88,19 +90,62 @@ form.addEventListener("submit", e => {
 
 citation.value = document.location.search.replace("?q=", "").replace(/%20/g, "").replace(/\s/g, "");
 
+function findGitHubDirectory(uid) {
+  let gitHubUrl = "";
+  const SUTTA_BOOKS = ["dn", "mn", "sn", "an", "kp", "dhp", "ud", "iti", "snp", "vv", "pv", "thag", "thig"];
+  // split book citation from number part
+  const bookId = uid.match(/^[a-z]+/)[0];
+  const numberId = uid.match(/[0-9.]+$/)[0];
+  console.log(bookId);
+  console.log(numberId);
+  if (SUTTA_BOOKS.includes(bookId)) {
+    gitHubUrl += "/sutta";
+  } else {
+    console.log("not a sutta");
+    return;
+  }
+  if (["dn", "mn"].includes(bookId)) {
+    gitHubUrl += `/${bookId}`;
+    console.log(gitHubUrl);
+    return gitHubUrl;
+  } else if (["sn", "an"].includes(bookId)) {
+    const [chapter, sutta] = numberId.split(".");
+    gitHubUrl += `/${bookId}/${bookId}${chapter}`;
+    console.log(gitHubUrl);
+    return gitHubUrl;
+  }
+}
+
 function buildSutta(slug) {
+  let gitHubUrl = "";
+
   function cleanIds(id) {
     return id.replace(/^[a-z].+?\d+?:/, "");
   }
 
-  const githubUrl = slug.replace(/%2F/g, "/").replace("https://github.com/suttacentral/bilara-data/blob/unpublished", "https://raw.githubusercontent.com/suttacentral/bilara-data/unpublished");
-  const uidArray = githubUrl.match(/([a-z0-9.]+)_translation/);
+  if (/bilara/.test(slug)) {
+    // transform bilara slug to githubUrl
+    const fileName = slug.match(/translation\/(.+$)/)[1];
+    console.log(fileName);
+    const fileNameParts = fileName.split(/[_-]/);
+    console.log(fileNameParts);
+    const [uid, , languageCode, translatorCode] = fileNameParts;
+    console.log(uid);
+    console.log(languageCode);
+    console.log(translatorCode);
+    const gitHubDirectory = findGitHubDirectory(uid);
+    gitHubUrl = `https://raw.githubusercontent.com/suttacentral/bilara-data/unpublished/translation/${languageCode}/${translatorCode}${gitHubDirectory}/${fileName}.json`;
+  } else {
+    gitHubUrl = slug.replace(/%2F/g, "/").replace("https://github.com/suttacentral/bilara-data/blob/unpublished", "https://raw.githubusercontent.com/suttacentral/bilara-data/unpublished");
+  }
+
+  const uidArray = gitHubUrl.match(/([a-z0-9.]+)_translation/);
 
   if (!uidArray) {
     errorResponse();
   }
 
-  const translationLanguage = githubUrl.match(/translation\/([a-z]+)/)[1];
+  const translationLanguage = gitHubUrl.match(/translation\/([a-z]+)/)[1];
   const uid = uidArray[1];
 
   let translator = "";
@@ -135,7 +180,7 @@ function buildSutta(slug) {
   <button id="hide-ids" class="hide-button">Toggle Ids</button>
   </div>`;
 
-  const draftTranslationResponse = fetch(githubUrl).then(response => response.json());
+  const draftTranslationResponse = fetch(gitHubUrl).then(response => response.json());
 
   const contentResponse = fetch(`https://suttacentral.net/api/bilarasuttas/${uid}/${translator}?lang=en`).then(response => response.json());
 
@@ -177,10 +222,9 @@ function buildSutta(slug) {
       errorResponse();
     });
   function errorResponse() {
-    suttaArea.innerHTML = `<p>Sorry, <code>${decodeURIComponent(slug)}</code> is not a valid GitHub URL.
+    suttaArea.innerHTML = `<p>Sorry, <code>${decodeURIComponent(slug)}</code> is not a valid URL.
       <\p>
-      <p>You want to use the URL for the page in unpublished branch of the translation you want to view. It will look something like this:</p>
-      <code>https://github.com/suttacentral/bilara-data/blob/unpublished/translation/es/maggatr/sutta/an/an3/an3.35_translation-es-maggatr.json<code>
+      ${INSTRUCTION_TEXT}
       `;
   }
 }
