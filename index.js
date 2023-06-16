@@ -1,6 +1,7 @@
 const suttaArea = document.getElementById("sutta");
 const homeButton = document.getElementById("home-button");
 const themeButton = document.getElementById("theme-button");
+const copyLinkButton = document.getElementById("copy-link");
 const bodyTag = document.querySelector("body");
 const previous = document.getElementById("previous");
 const next = document.getElementById("next");
@@ -16,6 +17,16 @@ const welcomeText = `<div class="instructions">
 
 homeButton.addEventListener("click", () => {
   document.location.search = "";
+});
+
+copyLinkButton.addEventListener("click", e => {
+  e.preventDefault();
+  navigator.clipboard.writeText(window.location.href);
+  const copyNoticeArea = document.getElementById("link-copy-notice-area");
+  copyNoticeArea.innerHTML = "<div class='link-copy-notice'>Copied!</div>";
+  setTimeout(() => {
+    copyNoticeArea.innerHTML = "";
+  }, 3000);
 });
 
 document.onkeyup = function (e) {

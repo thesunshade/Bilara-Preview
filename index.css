@@ -20,6 +20,37 @@ body.dark {
   background-color: var(--off-black);
 }
 
+.link-copy-notice {
+  position: fixed;
+  top: 1rem;
+  left: 50%;
+  width: 10rem;
+  height: 2rem;
+  padding-top: .8rem;
+  border: solid 2px var(--light-off-white);
+  border-radius: 10px;
+  text-align: center;
+  margin-left: -5rem;
+  background-color: var(--off-black);
+  color: var(--blue);
+  opacity: 1;
+  animation: fade 3s linear;
+}
+
+@keyframes fade {
+
+  0%,
+  100% {
+    opacity: 0
+  }
+
+  10%,
+  90% {
+    opacity: 1
+  }
+}
+
+
 .page-instructions {
   font-size: .8rem;
   color: var(--light-gray);
@@ -336,11 +367,6 @@ header ul li {
   }
 }
 
-.byline {
-  text-align: right;
-  font-style: italic;
-  font-size: 0.8rem;
-}
 
 br {
   line-height: 0px;
@@ -427,6 +453,14 @@ a:hover {
 .side-by-side .trans-lang {
   width: 48%;
 }
+
+
+:not(.hide-english.hide-pali) .side-by-side .pli-lang,
+:not(.hide-english.hide-pali) .side-by-side .eng-lang,
+:not(.hide-english.hide-pali) .side-by-side .trans-lang {
+  width: 30%;
+}
+
 
 .segment {
   word-break: break-word
