@@ -126,6 +126,10 @@ code {
   border-radius: 5px;
 }
 
+.dark code {
+  color: var(--dark-blue)
+}
+
 p {
   margin-bottom: 1.5rem;
 }
