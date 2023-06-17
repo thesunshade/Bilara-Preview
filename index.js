@@ -399,7 +399,7 @@ function buildSutta(slug) {
     return id.replace(/^[a-z].+?\d+?:/, "");
   }
 
-  if (/bilara/.test(slug)) {
+  if (/bilara\./.test(slug)) {
     // transform bilara slug to githubUrl
     const fileName = slug.match(/translation\/(.+$)/)[1];
     console.log(fileName);
