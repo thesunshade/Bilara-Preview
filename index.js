@@ -5,7 +5,7 @@ const copyLinkButton = document.getElementById("copy-link");
 const bodyTag = document.querySelector("body");
 const previous = document.getElementById("previous");
 const next = document.getElementById("next");
-const INSTRUCTION_TEXT = `<p>Please enter the url from the Bilar app or the url from the GitHub unpublished branch. It will look something like this:</p>
+const INSTRUCTION_TEXT = `<p>Please enter the url from the Bilara app or the url from the GitHub unpublished branch. It will look something like this:</p>
 <p><code>https://bilara.suttacentral.net/translation/an3.35_translation-es-maggatr</code></p>
 <p>or</p>
 <p><code>https://github.com/suttacentral/bilara-data/blob/unpublished/translation/es/maggatr/sutta/an/an3/an3.35_translation-es-maggatr.json</code></p>`;
