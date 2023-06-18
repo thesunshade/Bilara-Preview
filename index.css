@@ -430,6 +430,10 @@ a:hover {
     flex-direction: column !important;
     row-gap: 1rem;
   }
+
+  .hide-button {
+    font-size: .5rem;
+  }
 }
 
 .hide-button {
