@@ -403,9 +403,10 @@ function buildSutta(slug) {
     // transform bilara slug to githubUrl
     const fileName = slug.match(/translation\/(.+$)/)[1];
     console.log(fileName);
-    const fileNameParts = fileName.split(/[_-]/);
+    const fileNameSplit = fileName.split(/_/);
+    const [uid, fileNameParts] = fileNameSplit;
     console.log(fileNameParts);
-    const [uid, , languageCode, translatorCode] = fileNameParts;
+    const [, languageCode, translatorCode] = fileNameParts.split("-");
     console.log(uid);
     console.log(languageCode);
     console.log(translatorCode);
@@ -416,7 +417,7 @@ function buildSutta(slug) {
     gitHubUrl = slug.replace(/%2F/g, "/").replace("https://github.com/suttacentral/bilara-data/blob/unpublished", "https://raw.githubusercontent.com/suttacentral/bilara-data/unpublished");
   }
 
-  const uidArray = gitHubUrl.match(/([a-z0-9.]+)_translation/);
+  const uidArray = gitHubUrl.match(/([a-z0-9.-]+)_translation/);
 
   if (!uidArray) {
     errorResponse();
@@ -458,7 +459,7 @@ function buildSutta(slug) {
   </div>`;
 
   const draftTranslationResponse = fetch(gitHubUrl).then(response => response.json());
-
+  console.log(`https://suttacentral.net/api/bilarasuttas/${uid}/${translator}?lang=en`);
   const contentResponse = fetch(`https://suttacentral.net/api/bilarasuttas/${uid}/${translator}?lang=en`).then(response => response.json());
 
   const suttaplex = fetch(`https://suttacentral.net/api/suttas/${uid}/${translator}?lang=en&siteLanguage=en`).then(response => response.json());
@@ -466,6 +467,7 @@ function buildSutta(slug) {
   Promise.all([draftTranslationResponse, contentResponse, suttaplex])
     .then(responses => {
       const [draftTranslation, contentResponse, suttaplex] = responses;
+      console.log(contentResponse);
       const { html_text, translation_text, root_text, keys_order } = contentResponse;
 
       keys_order.forEach(segment => {
@@ -497,6 +499,7 @@ function buildSutta(slug) {
     })
     .catch(error => {
       errorResponse();
+      console.log(error);
     });
   function errorResponse() {
     suttaArea.innerHTML = `<p>Sorry, <code>${decodeURIComponent(slug)}</code> is not a valid URL.
