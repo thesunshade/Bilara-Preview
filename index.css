@@ -51,14 +51,6 @@ body.dark {
 }
 
 
-.page-instructions {
-  font-size: .8rem;
-  color: var(--light-gray);
-  text-align: center;
-  margin-bottom: .2rem;
-  padding: 0 4rem
-}
-
 #form {
   text-align: center;
   display: flex;
@@ -130,33 +122,20 @@ code {
   color: var(--dark-blue)
 }
 
+.error,
+.dark .error {
+  color: rgb(223, 9, 9)
+}
+
 p {
   margin-bottom: 1.5rem;
 }
 
-.instructions ul li {
-  line-height: 1.3;
+.instructions p {
+  margin-bottom: 0rem;
 }
 
-.instructions ul {
-  margin-top: 0rem;
-  padding: 0rem;
-  list-style-type: none;
-}
 
-.instructions h2 {
-  font-size: 1.2rem;
-  margin-top: 0rem;
-  margin-bottom: 0.1rem;
-  margin-left: 0rem;
-}
-
-.instructions h3 {
-  font-size: 1rem;
-  margin-top: 0rem;
-  margin-bottom: 0.1rem;
-  margin-left: 0rem;
-}
 
 header ul {
   font-size: .8rem;

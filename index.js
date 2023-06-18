@@ -92,8 +92,12 @@ citation.value = document.location.search.replace("?q=", "").replace(/%20/g, "")
 
 function findGitHubDirectory(uid) {
   let gitHubUrl = "";
-  const SUTTA_BOOKS = ["dn", "mn", "sn", "an", "kp", "dhp", "ud", "iti", "snp", "vv", "pv", "thag", "thig"];
-  const KN_DICTIONARY = {
+  const NIKAYA_SUTTAS = ["dn", "mn"];
+  const NIKAYA_CHAPTERS = ["sn", "an"];
+  const KN_SUTTAS = ["kp", "dhp", "vv", "pv", "thag", "thig"];
+  const KN_CHAPTERS = ["ud", "iti", "snp"];
+  const SUTTA_BOOKS = NIKAYA_SUTTAS.concat(NIKAYA_CHAPTERS, KN_SUTTAS, KN_CHAPTERS);
+  const KN_CHAPTER_DICTIONARY = {
     "ud1.1": "vagga1",
     "ud1.2": "vagga1",
     "ud1.3": "vagga1",
@@ -361,34 +365,36 @@ function findGitHubDirectory(uid) {
     "snp5.19": "vagga5",
   };
   // split book citation from number part
-  const bookId = uid.match(/^[a-z]+/)[0];
+  const bookId = uid.match(/^[a-z-]+/)[0];
   const numberId = uid.match(/[0-9.-]+$/)[0];
   console.log(bookId);
   console.log(numberId);
+
   if (SUTTA_BOOKS.includes(bookId)) {
     gitHubUrl += "/sutta";
-  } else {
-    console.log("not a sutta");
+
+    if (NIKAYA_SUTTAS.includes(bookId)) {
+      gitHubUrl += `/${bookId}`;
+      console.log(gitHubUrl);
+      return gitHubUrl;
+    } else if (NIKAYA_CHAPTERS.includes(bookId)) {
+      const [chapter, sutta] = numberId.split(".");
+      gitHubUrl += `/${bookId}/${bookId}${chapter}`;
+      console.log(gitHubUrl);
+      return gitHubUrl;
+    } else if (KN_CHAPTERS.includes(bookId)) {
+      const directory = KN_CHAPTER_DICTIONARY[uid];
+      gitHubUrl += `/kn/${bookId}/${directory}`;
+      console.log(gitHubUrl);
+      return gitHubUrl;
+    } else if (KN_SUTTAS.includes(bookId)) {
+      gitHubUrl += `/kn/${bookId}`;
+      console.log(gitHubUrl);
+      return gitHubUrl;
+    }
+  } else if (bookId.match(/pli-tv/)) {
+    console.log("this is vinaya");
     return;
-  }
-  if (["dn", "mn"].includes(bookId)) {
-    gitHubUrl += `/${bookId}`;
-    console.log(gitHubUrl);
-    return gitHubUrl;
-  } else if (["sn", "an"].includes(bookId)) {
-    const [chapter, sutta] = numberId.split(".");
-    gitHubUrl += `/${bookId}/${bookId}${chapter}`;
-    console.log(gitHubUrl);
-    return gitHubUrl;
-  } else if (["ud", "iti", "snp"].includes(bookId)) {
-    const directory = KN_DICTIONARY[uid];
-    gitHubUrl += `/kn/${bookId}/${directory}`;
-    console.log(gitHubUrl);
-    return gitHubUrl;
-  } else if (["kp", "dhp", "vv", "pv"].includes(bookId)) {
-    gitHubUrl += `/kn/${bookId}`;
-    console.log(gitHubUrl);
-    return gitHubUrl;
   }
 }
 
@@ -437,20 +443,20 @@ function buildSutta(slug) {
   translator = "sujato";
   slug = slug.toLowerCase();
 
-  if (uid.match(/bu|bi|kd|pvr/)) {
-    translator = "brahmali";
-    uid = slug.replace(/bu([psan])/, "bu-$1");
-    slug = slug.replace(/bi([psn])/, "bi-$1");
-    if (!slug.match("pli-tv-")) {
-      slug = "pli-tv-" + slug;
-    }
-    if (!slug.match("vb-")) {
-      slug = slug.replace("bu-", "bu-vb-");
-    }
-    if (!slug.match("vb-")) {
-      slug = slug.replace("bi-", "bi-vb-");
-    }
-  }
+  // if (uid.match(/bu|bi|kd|pvr/)) {
+  //   translator = "brahmali";
+  //   uid = slug.replace(/bu([psan])/, "bu-$1");
+  //   slug = slug.replace(/bi([psn])/, "bi-$1");
+  //   if (!slug.match("pli-tv-")) {
+  //     slug = "pli-tv-" + slug;
+  //   }
+  //   if (!slug.match("vb-")) {
+  //     slug = slug.replace("bu-", "bu-vb-");
+  //   }
+  //   if (!slug.match("vb-")) {
+  //     slug = slug.replace("bi-", "bi-vb-");
+  //   }
+  // }
 
   let html = `<div class="button-area">
   <button id="hide-pali" class="hide-button">Toggle Pali</button>
@@ -502,10 +508,11 @@ function buildSutta(slug) {
       console.log(error);
     });
   function errorResponse() {
-    suttaArea.innerHTML = `<p>Sorry, <code>${decodeURIComponent(slug)}</code> is not a valid URL.
+    suttaArea.innerHTML = `<div class="instructions"><h1>Sorry,</h1><p> <code class="error">${decodeURIComponent(slug)}</code> is not a valid URL or it is somehow not compatible with this previewer app.
       <\p>
       ${INSTRUCTION_TEXT}
-      `;
+      <p>If you have questions or suggestions, please post on the <a href="https://discourse.suttacentral.net/t/translation-previewer-for-bilara-texts/29467">D&D forum</a>.</p>
+      </div>`;
   }
 }
 
