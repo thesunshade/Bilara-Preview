@@ -65,6 +65,7 @@ body.dark {
   background-color: var(--off-white);
   color: var(--dark-gray);
   width: 30rem;
+  margin-left: .5rem
 }
 
 .dark #citation {
@@ -346,6 +347,7 @@ header ul li {
   color: #5a5a5a;
 }
 
+
 @media only screen and (max-width: 975px) {
   body {
     margin: 1rem 0.5rem;
@@ -354,6 +356,15 @@ header ul li {
   .button-area {
     right: 1px;
     top: 1px;
+    position: initial;
+    flex-direction: row;
+    column-gap: .5rem;
+    justify-content: center;
+    margin: .5rem 0
+  }
+
+  .hide-button {
+    font-size: .7rem;
   }
 }
 
@@ -410,9 +421,7 @@ a:hover {
     row-gap: 1rem;
   }
 
-  .hide-button {
-    font-size: .5rem;
-  }
+
 }
 
 .hide-button {

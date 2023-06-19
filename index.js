@@ -92,6 +92,10 @@ citation.value = document.location.search.replace("?q=", "").replace(/%20/g, "")
 
 function findGitHubDirectory(uid) {
   let gitHubUrl = "";
+  const VINAYA_BU = ["pli-tv-bu-vb-pj", "pli-tv-bu-vb-ss", "pli-tv-bu-vb-ay", "pli-tv-bu-vb-np", "pli-tv-bu-vb-pc", "pli-tv-bu-vb-pd", "pli-tv-bu-vb-sk", "pli-tv-bu-vb-as"];
+  const VINAYA_BI = ["pli-tv-bi-vb-pj", "pli-tv-bi-vb-ss", "pli-tv-bi-vb-np", "pli-tv-bi-vb-pc", "pli-tv-bi-vb-pd", "pli-tv-bi-vb-sk", "pli-tv-bi-vb-as"];
+  const VINAYA_BOOKS = ["pli-tv-kd", "pli-tv-pvr"];
+  const VINAYA = VINAYA_BOOKS.concat(VINAYA_BU, VINAYA_BI);
   const NIKAYA_SUTTAS = ["dn", "mn"];
   const NIKAYA_CHAPTERS = ["sn", "an"];
   const KN_SUTTAS = ["kp", "dhp", "vv", "pv", "thag", "thig"];
@@ -371,29 +375,39 @@ function findGitHubDirectory(uid) {
   console.log(numberId);
 
   if (SUTTA_BOOKS.includes(bookId)) {
-    gitHubUrl += "/sutta";
+    gitHubUrl += "sutta";
 
     if (NIKAYA_SUTTAS.includes(bookId)) {
       gitHubUrl += `/${bookId}`;
-      console.log(gitHubUrl);
       return gitHubUrl;
     } else if (NIKAYA_CHAPTERS.includes(bookId)) {
       const [chapter, sutta] = numberId.split(".");
       gitHubUrl += `/${bookId}/${bookId}${chapter}`;
-      console.log(gitHubUrl);
       return gitHubUrl;
     } else if (KN_CHAPTERS.includes(bookId)) {
       const directory = KN_CHAPTER_DICTIONARY[uid];
       gitHubUrl += `/kn/${bookId}/${directory}`;
-      console.log(gitHubUrl);
       return gitHubUrl;
     } else if (KN_SUTTAS.includes(bookId)) {
       gitHubUrl += `/kn/${bookId}`;
-      console.log(gitHubUrl);
       return gitHubUrl;
     }
-  } else if (bookId.match(/pli-tv/)) {
-    console.log("this is vinaya");
+  } else if (VINAYA.includes(bookId)) {
+    gitHubUrl += "vinaya";
+
+    if (VINAYA_BOOKS.includes(bookId)) {
+      return gitHubUrl + `/${bookId}`;
+    } else if (VINAYA_BU.includes(bookId)) {
+      if (bookId === "pli-tv-bu-vb-as") {
+        return gitHubUrl + `/pli-tv-bu-vb/`;
+      }
+      return gitHubUrl + `/pli-tv-bu-vb/${bookId}`;
+    } else if (VINAYA_BI.includes(bookId)) {
+      if (bookId === "pli-tv-bi-vb-as") {
+        return gitHubUrl + `/pli-tv-bi-vb/`;
+      }
+      return gitHubUrl + `/pli-tv-bi-vb/${bookId}`;
+    }
     return;
   }
 }
@@ -408,17 +422,11 @@ function buildSutta(slug) {
   if (/bilara\./.test(slug)) {
     // transform bilara slug to githubUrl
     const fileName = slug.match(/translation\/(.+$)/)[1];
-    console.log(fileName);
     const fileNameSplit = fileName.split(/_/);
     const [uid, fileNameParts] = fileNameSplit;
-    console.log(fileNameParts);
     const [, languageCode, translatorCode] = fileNameParts.split("-");
-    console.log(uid);
-    console.log(languageCode);
-    console.log(translatorCode);
     const gitHubDirectory = findGitHubDirectory(uid);
-    gitHubUrl = `https://raw.githubusercontent.com/suttacentral/bilara-data/unpublished/translation/${languageCode}/${translatorCode}${gitHubDirectory}/${fileName}.json`;
-    console.log(gitHubUrl);
+    gitHubUrl = `https://raw.githubusercontent.com/suttacentral/bilara-data/unpublished/translation/${languageCode}/${translatorCode}/${gitHubDirectory}/${fileName}.json`;
   } else {
     gitHubUrl = slug.replace(/%2F/g, "/").replace("https://github.com/suttacentral/bilara-data/blob/unpublished", "https://raw.githubusercontent.com/suttacentral/bilara-data/unpublished");
   }
@@ -433,30 +441,13 @@ function buildSutta(slug) {
   const uid = uidArray[1];
 
   let translator = "";
-  // let slugArray = slug.split("&");
-  // slug = slugArray[0];
-  // if (slugArray[1]) {
-  //   translator = slugArray[1];
-  // } else {
-  //   translator = "sujato";
-  // }
+
   translator = "sujato";
   slug = slug.toLowerCase();
 
-  // if (uid.match(/bu|bi|kd|pvr/)) {
-  //   translator = "brahmali";
-  //   uid = slug.replace(/bu([psan])/, "bu-$1");
-  //   slug = slug.replace(/bi([psn])/, "bi-$1");
-  //   if (!slug.match("pli-tv-")) {
-  //     slug = "pli-tv-" + slug;
-  //   }
-  //   if (!slug.match("vb-")) {
-  //     slug = slug.replace("bu-", "bu-vb-");
-  //   }
-  //   if (!slug.match("vb-")) {
-  //     slug = slug.replace("bi-", "bi-vb-");
-  //   }
-  // }
+  if (uid.match(/bu|bi|kd|pvr/)) {
+    translator = "brahmali";
+  }
 
   let html = `<div class="button-area">
   <button id="hide-pali" class="hide-button">Toggle Pali</button>
