@@ -485,14 +485,14 @@ function buildSutta(slug) {
         <span class="trans-lang" lang="${translationLanguage}"><span class="ids">${cleanIds(segment)} </span>${draftTranslation[segment]}</span>
         </span>${closeHtml}\n\n`;
       });
-      const scLink = `<p class="sc-link"><a href="https://suttacentral.net/${uid}">On SuttaCentral.net</a></p>`;
 
-      suttaArea.innerHTML = scLink + html;
+      suttaArea.innerHTML = html;
       document.title = `${suttaplex.suttaplex.acronym} ${suttaplex.bilara_root_text.title}: ${suttaplex.bilara_translated_text.title}`;
 
       toggleThePali();
       toggleTheEnglish();
       toggleTheIds();
+      updateToolUrls(uid);
     })
     .catch(error => {
       errorResponse();
@@ -593,3 +593,15 @@ abbreviations.forEach(book => {
     citation.focus();
   });
 });
+
+function updateToolUrls(uid) {
+  const citationHelperLink = document.getElementById("citation-helper");
+  const suttaDifferLink = document.getElementById("sutta-differ");
+  const scLightLink = document.getElementById("sc-light");
+  const scLink = document.getElementById("sc-link");
+
+  citationHelperLink.href = `https://sutta.readingfaithfully.org/?q=${uid}`;
+  suttaDifferLink.href = `https://diff.readingfaithfully.org/?one=${uid}`;
+  scLightLink.href = `https://sc.readingfaithfully.org/?q=${uid}`;
+  scLink.href = `https://suttacentral.net/${uid}`;
+}

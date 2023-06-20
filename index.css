@@ -107,6 +107,10 @@ body.dark {
   margin-left: 5px;
 }
 
+.icon-button:hover {
+  filter: drop-shadow(1px 1px 4px #c6b8ac);
+}
+
 
 .icon-button svg {
   margin-top: 3px;
@@ -423,6 +427,13 @@ a:hover {
 
 
 }
+
+#sc-link {
+  position: relative;
+  top: 2px
+}
+
+
 
 .hide-button {
   background-color: var(--off-white);
