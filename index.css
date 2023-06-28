@@ -1,5 +1,59 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Serif&display=swap');
 
+
+/*   1. Use a more-intuitive box-sizing model. */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/*   2. Remove default margin */
+* {
+  margin: 0;
+}
+
+/*   Typographic tweaks!
+  3. Add accessible line-height
+  4. Improve text rendering */
+body {
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/*   5. Improve media defaults */
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+/*   6. Remove built-in form typography styles */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+/*   7. Avoid text overflows */
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}
+
+
+
+
+
 :root {
   --off-white: rgb(221, 221, 221);
   --light-off-white: #ffead7;
@@ -10,12 +64,19 @@
   --blue: #c4470d;
 }
 
+html,
 body {
-  margin: 1rem 3rem;
+  height: 100%;
+}
+
+body {
+  margin: 1rem 3rem 0rem;
   padding-top: 3rem;
   padding-bottom: 3rem;
   background-color: var(--light-off-white);
   font-family: 'Roboto Serif', serif;
+  display: flex;
+  flex-direction: column;
 }
 
 .dark {
@@ -155,11 +216,17 @@ p {
   margin-bottom: 1.5rem;
 }
 
-.instructions p {
-  margin-bottom: 0rem;
+.instructions {
+  margin-top: 2rem
 }
 
+.instructions p {
+  margin-bottom: 1rem;
+}
 
+header {
+  margin-top: 1rem;
+}
 
 header ul {
   font-size: .8rem;
@@ -291,6 +358,10 @@ dt {
   line-height: 1.5;
 }
 
+blockquote {
+  margin-left: 3rem
+}
+
 .ids {
   font-size: .8rem;
 
@@ -371,7 +442,7 @@ header ul li {
 }
 
 
-@media only screen and (max-width: 975px) {
+@media only screen and (max-width: 775px) {
   body {
     margin: 0rem;
     padding: 1rem;
@@ -404,7 +475,10 @@ br {
   flex-direction: row;
   gap: 1rem;
   justify-content: center;
-  margin-top: 2rem;
+  margin-top: auto;
+  border-top: solid 1px var(--light-gray);
+  padding-top: 1rem;
+  padding-bottom: 1rem
 }
 
 .links-area a {

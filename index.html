@@ -20,37 +20,39 @@
   </head>
 
   <body class="dark">
-    <div id="link-copy-notice-area" class="link-copy-notice-area"></div>
-    <div class="controls">
-      <img src="/favicon.png" height="19px" />
-      <form id="form"><input id="citation" type="text" placeholder="Enter URL from Bilara or the GitHub unpublished branch" /><input class="go-button" type="submit" value="Go" /></form>
-      <div class="icon-area">
-        <div id="copy-link" class="icon-button"><img src="./images/link.png" height="18px" style="margin-top: 4px" alt="Copy link." title="Copy link" /></div>
-        <div id="home-button" class="icon-button" title="Clear the page">
-          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" id="body_1" width="20" height="15">
-            <g transform="matrix(0.029296875 0 0 0.029296875 1.5625004 -0)">
-              <path
-                d="M511.8 287.6L512.5 447.7C 512.5 450.5 512.3 453.1 512 455.8L512 455.8L512 472C 512 494.1 494.1 512 472 512L472 512L456 512C 454.9 512 453.8 511.1 452.7 511.9C 451.3 511.1 449.9 512 448.5 512L448.5 512L392 512C 369.9 512 352 494.1 352 472L352 472L352 384C 352 366.3 337.7 352 320 352L320 352L256 352C 238.3 352 224 366.3 224 384L224 384L224 472C 224 494.1 206.1 512 184 512L184 512L128.1 512C 126.6 512 125.1 511.9 123.6 511.8C 122.4 511.9 121.2 512 120 512L120 512L104 512C 81.91 512 64 494.1 64 472L64 472L64 360C 64 359.1 64.03 358.1 64.09 357.2L64.09 357.2L64.09 287.6L32.05 287.6C 14.02 287.6 0 273.5 0 255.5C 0 246.5 3.004 238.5 10.01 231.5L10.01 231.5L266.4 8.016C 273.4 1.002 281.4 0 288.4 0C 295.4 0 303.4 2.004 309.5 7.014L309.5 7.014L416 100.7L416 64C 416 46.33 430.3 32 448 32L448 32L480 32C 497.7 32 512 46.33 512 64L512 64L512 185L564.8 231.5C 572.8 238.5 576.9 246.5 575.8 255.5C 575.8 273.5 560.8 287.6 543.8 287.6L543.8 287.6L511.8 287.6z"
-                stroke="none"
-                fill="#989898"
-                fill-rule="nonzero" />
-            </g>
-          </svg>
-        </div>
-        <a href="https://suttacentral.net/" id="sc-link"><img src="./images/indexSuttaCentral-gray.png" height="17" class="icon-button" title="Open on SuttaCentral.net" /></a>
-        <div id="theme-button" class="icon-button" title="Toggle light/dark theme">
-          <svg fill="none" height="20" viewBox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg">
-            <path d="M12 16C14.2091 16 16 14.2091 16 12C16 9.79086 14.2091 8 12 8V16Z" fill="#989898" />
-            <path clip-rule="evenodd" d="M12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2ZM12 4V8C9.79086 8 8 9.79086 8 12C8 14.2091 9.79086 16 12 16V20C16.4183 20 20 16.4183 20 12C20 7.58172 16.4183 4 12 4Z" fill="#989898" fill-rule="evenodd" />
-          </svg>
+    <div class="main-app">
+      <div id="link-copy-notice-area" class="link-copy-notice-area"></div>
+      <div class="controls">
+        <img src="/favicon.png" height="19px" />
+        <form id="form"><input id="citation" type="text" placeholder="Enter URL from Bilara or the GitHub unpublished branch" /><input class="go-button" type="submit" value="Go" /></form>
+        <div class="icon-area">
+          <div id="copy-link" class="icon-button"><img src="./images/link.png" height="18px" style="margin-top: 4px" alt="Copy link." title="Copy link" /></div>
+          <div id="home-button" class="icon-button" title="Clear the page">
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" id="body_1" width="20" height="15">
+              <g transform="matrix(0.029296875 0 0 0.029296875 1.5625004 -0)">
+                <path
+                  d="M511.8 287.6L512.5 447.7C 512.5 450.5 512.3 453.1 512 455.8L512 455.8L512 472C 512 494.1 494.1 512 472 512L472 512L456 512C 454.9 512 453.8 511.1 452.7 511.9C 451.3 511.1 449.9 512 448.5 512L448.5 512L392 512C 369.9 512 352 494.1 352 472L352 472L352 384C 352 366.3 337.7 352 320 352L320 352L256 352C 238.3 352 224 366.3 224 384L224 384L224 472C 224 494.1 206.1 512 184 512L184 512L128.1 512C 126.6 512 125.1 511.9 123.6 511.8C 122.4 511.9 121.2 512 120 512L120 512L104 512C 81.91 512 64 494.1 64 472L64 472L64 360C 64 359.1 64.03 358.1 64.09 357.2L64.09 357.2L64.09 287.6L32.05 287.6C 14.02 287.6 0 273.5 0 255.5C 0 246.5 3.004 238.5 10.01 231.5L10.01 231.5L266.4 8.016C 273.4 1.002 281.4 0 288.4 0C 295.4 0 303.4 2.004 309.5 7.014L309.5 7.014L416 100.7L416 64C 416 46.33 430.3 32 448 32L448 32L480 32C 497.7 32 512 46.33 512 64L512 64L512 185L564.8 231.5C 572.8 238.5 576.9 246.5 575.8 255.5C 575.8 273.5 560.8 287.6 543.8 287.6L543.8 287.6L511.8 287.6z"
+                  stroke="none"
+                  fill="#989898"
+                  fill-rule="nonzero" />
+              </g>
+            </svg>
+          </div>
+          <a href="https://suttacentral.net/" id="sc-link"><img src="./images/indexSuttaCentral-gray.png" height="17" class="icon-button" title="Open on SuttaCentral.net" /></a>
+          <div id="theme-button" class="icon-button" title="Toggle light/dark theme">
+            <svg fill="none" height="20" viewBox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 16C14.2091 16 16 14.2091 16 12C16 9.79086 14.2091 8 12 8V16Z" fill="#989898" />
+              <path clip-rule="evenodd" d="M12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2ZM12 4V8C9.79086 8 8 9.79086 8 12C8 14.2091 9.79086 16 12 16V20C16.4183 20 20 16.4183 20 12C20 7.58172 16.4183 4 12 4Z" fill="#989898" fill-rule="evenodd" />
+            </svg>
+          </div>
         </div>
       </div>
-    </div>
-    <div id="sutta"></div>
-    <hr />
-    <div id="navigation" class="navigation">
-      <div id="previous"></div>
-      <div id="next"></div>
+      <div id="sutta"></div>
+
+      <div id="navigation" class="navigation">
+        <div id="previous"></div>
+        <div id="next"></div>
+      </div>
     </div>
     <div class="links-area" style="text-align: center">
       <a href="http://diff.readingfaithfully.org" id="sutta-differ" title="Sutta Differ" rel="noreferrer" target="_blank"><img width="20px" alt="Sutta Differ icon" src="./images/favicon-diff-black.png" /></a>
