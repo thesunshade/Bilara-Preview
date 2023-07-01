@@ -61,7 +61,7 @@ h6 {
   --dark-gray: #5a5a5a;
   --light-gray: #8f8f8f;
   --dark-blue: #562d0a;
-  --blue: #c4470d;
+  --highlight: #c4470d;
 }
 
 html,
@@ -84,18 +84,31 @@ body {
 }
 
 .link-copy-notice {
-  position: fixed;
+  /* position: fixed;
   top: 5rem;
   left: 50%;
   width: 10rem;
   height: 2rem;
-  padding-top: .8rem;
+  margin-left: -5rem;
+  padding-top: .8rem; */
+
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  margin: auto;
+  height: 4rem;
+  width: 10rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   border: solid 2px var(--light-off-white);
   border-radius: 10px;
   text-align: center;
-  margin-left: -5rem;
+  font-size: 2rem;
   background-color: var(--off-black);
-  color: var(--blue);
+  color: var(--highlight);
   opacity: 1;
   animation: fade 3s linear;
 }
@@ -332,11 +345,11 @@ h5 .pli-lang {
 }
 
 a {
-  color: var(--blue);
+  color: var(--highlight);
 }
 
 .dark a {
-  color: var(--blue);
+  color: var(--highlight);
 }
 
 dt {
@@ -549,7 +562,7 @@ a:hover {
 }
 
 .dark .hide-button:hover {
-  background-color: var(--blue);
+  background-color: var(--highlight);
   color: var(--off-white);
 }
 
