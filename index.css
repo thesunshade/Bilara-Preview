@@ -84,14 +84,6 @@ body {
 }
 
 .link-copy-notice {
-  /* position: fixed;
-  top: 5rem;
-  left: 50%;
-  width: 10rem;
-  height: 2rem;
-  margin-left: -5rem;
-  padding-top: .8rem; */
-
   position: absolute;
   top: 0px;
   bottom: 0px;
