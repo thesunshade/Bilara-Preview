@@ -1,5 +1,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Serif&display=swap');
 
+:root {
+  --off-white: rgb(221, 221, 221);
+  --light-off-white: #ffead7;
+  --off-black: #2c1704;
+  --dark-gray: #5a5a5a;
+  --light-gray: #8f8f8f;
+  --dark-blue: #562d0a;
+  --highlight: #c4470d;
+}
+
+html,
+body {
+  height: 100%;
+}
 
 /*   1. Use a more-intuitive box-sizing model. */
 *,
@@ -54,20 +68,6 @@ h6 {
 
 
 
-:root {
-  --off-white: rgb(221, 221, 221);
-  --light-off-white: #ffead7;
-  --off-black: #2c1704;
-  --dark-gray: #5a5a5a;
-  --light-gray: #8f8f8f;
-  --dark-blue: #562d0a;
-  --highlight: #c4470d;
-}
-
-html,
-body {
-  height: 100%;
-}
 
 body {
   margin: 1rem 3rem 0rem;
