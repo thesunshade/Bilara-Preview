@@ -237,7 +237,7 @@ header ul {
   font-size: .8rem;
 }
 
-.lists {
+/* .lists {
   display: flex;
   flex-direction: row;
   column-gap: 0rem;
@@ -252,9 +252,9 @@ header ul {
   display: flex;
   flex-direction: row;
   gap: 1.2rem;
-}
+} */
 
-.abbr {
+/* .abbr {
   font-family: monospace;
   background-color: rgb(220, 220, 231);
   padding: 1px 4px;
@@ -266,7 +266,7 @@ header ul {
 
 .dark .abbr {
   background-color: var(--dark-blue);
-}
+} */
 
 @media only screen and (max-width: 730px) {
 
