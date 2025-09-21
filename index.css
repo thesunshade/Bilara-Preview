@@ -369,7 +369,6 @@ blockquote {
 
 .ids {
   font-size: .8rem;
-
   color: var(--dark-gray)
 }
 
@@ -381,13 +380,18 @@ blockquote {
   display: none
 }
 
+.hide-en-comments .en-comment-text {
+  display: none
+}
+
 .eng-lang {
   font-size: .9rem;
   display: block;
   color: var(--dark-gray);
 }
 
-.comment-text {
+.comment-text,
+.en-comment-text {
   font-size: .8rem;
   display: block;
   color: var(--light-gray);

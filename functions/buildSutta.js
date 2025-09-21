@@ -1,6 +1,7 @@
 import { findGitHubDirectory } from "./findGitHubDirectory.js";
 import { toggleTheEnglish } from "./toggleTheEnglish.js";
 import { toggleTheComments } from "./toggleTheComments.js";
+import { toggleTheEnComments } from "./toggleTheEnComments.js";
 import { toggleTheIds } from "./toggleTheIds.js";
 import { toggleThePali } from "./toggleThePali.js";
 import { suttaArea, INSTRUCTION_TEXT } from "../index.js";
@@ -57,6 +58,7 @@ export function buildSutta(slug) {
   <button id="hide-pali" class="hide-button">Toggle Pali</button>
   <button id="hide-english" class="hide-button">Toggle English</button>
   <button id="hide-comments" class="hide-button">Toggle Comments</button>
+  <button id="hide-en-comments" class="hide-button">Toggle En Comments</button>
   <button id="hide-ids" class="hide-button">Toggle Ids</button>
   </div>`;
 
@@ -82,6 +84,7 @@ export function buildSutta(slug) {
         <span class="eng-lang" lang="en">${translation_text[segment] ? translation_text[segment] : ""}</span>
         <span class="trans-lang" lang="${translationLanguage}"><span class="ids">${cleanIds(segment)} </span>${draftTranslation[segment]}</span>
         <span class="comment-text" lang="${translationLanguage}">${draftCommentResponse[segment] ? draftCommentResponse[segment] : ""}</span>
+        <span class="en-comment-text" lang="en">${comment_text[segment] ? comment_text[segment] : ""}</span>
         </span>${closeHtml}\n\n`;
       });
 
@@ -92,6 +95,7 @@ export function buildSutta(slug) {
       toggleTheEnglish();
       toggleTheIds();
       toggleTheComments();
+      toggleTheEnComments();
       updateToolUrls(uid);
     })
     .catch(error => {

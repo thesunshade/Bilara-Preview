@@ -4,7 +4,7 @@ export function toggleTheComments() {
   const hideButton = document.getElementById("hide-comments");
 
   // initial state
-  if (localStorage.idsToggle) {
+  if (localStorage.commentsToggle) {
     if (localStorage.commentsToggle === "hide") {
       suttaArea.classList.add("hide-comments");
     }
