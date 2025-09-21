@@ -14,15 +14,23 @@ export function buildSutta(slug) {
     return id.replace(/^[a-z].+?\d+?:/, "");
   }
 
+  // The app can accept two types of URLs
+  // 1. from the Bilara app
+  // 2. from the github repository
+  //
+  // If the Bilara app link is given, it gets transformed into a GitHub link
+
   if (/bilara\./.test(slug)) {
     // transform bilara slug to githubUrl
+
     const fileName = slug.match(/translation\/(.+$)/)[1];
     const fileNameSplit = fileName.split(/_/);
     const [uid, fileNameParts] = fileNameSplit;
     const [, languageCode, translatorCode] = fileNameParts.split("-");
     const gitHubDirectory = findGitHubDirectory(uid);
     gitHubTranslationUrl = `https://raw.githubusercontent.com/suttacentral/bilara-data/unpublished/translation/${languageCode}/${translatorCode}/${gitHubDirectory}/${fileName}.json`;
-    gitHubCommentsUrl = `https://raw.githubusercontent.com/suttacentral/bilara-data/unpublished/comment/${languageCode}/${translatorCode}/${gitHubDirectory}/${fileName}.json`;
+    const commentFileName = fileName.replace("translation", "comment");
+    gitHubCommentsUrl = `https://raw.githubusercontent.com/suttacentral/bilara-data/unpublished/comment/${languageCode}/${translatorCode}/${gitHubDirectory}/${commentFileName}.json`;
   } else {
     gitHubTranslationUrl = slug.replace(/%2F/g, "/").replace("https://github.com/suttacentral/bilara-data/blob/unpublished", "https://raw.githubusercontent.com/suttacentral/bilara-data/unpublished");
     gitHubCommentsUrl = slug.replace(/%2F/g, "/").replace("https://github.com/suttacentral/bilara-data/blob/unpublished", "https://raw.githubusercontent.com/suttacentral/bilara-data/unpublished").replaceAll("translation", "comment");
