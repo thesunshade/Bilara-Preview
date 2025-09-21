@@ -63,7 +63,9 @@ export function buildSutta(slug) {
   </div>`;
 
   const draftTranslationResponse = fetch(gitHubTranslationUrl).then(response => response.json());
-  const draftCommentResponse = fetch(gitHubCommentsUrl).then(response => response.json());
+  const draftCommentResponse = fetch(gitHubCommentsUrl)
+    .then(response => response.json())
+    .catch(error => {});
   const contentResponse = fetch(`https://suttacentral.net/api/bilarasuttas/${uid}/${translator}?lang=en`).then(response => response.json());
 
   const suttaplex = fetch(`https://suttacentral.net/api/suttas/${uid}/${translator}?lang=en&siteLanguage=en`).then(response => response.json());
@@ -83,8 +85,8 @@ export function buildSutta(slug) {
         <span class="pli-lang" lang="pi">${root_text[segment] ? root_text[segment] : ""}</span>
         <span class="eng-lang" lang="en">${translation_text[segment] ? translation_text[segment] : ""}</span>
         <span class="trans-lang" lang="${translationLanguage}"><span class="ids">${cleanIds(segment)} </span>${draftTranslation[segment]}</span>
-        <span class="comment-text" lang="${translationLanguage}">${draftCommentResponse[segment] ? draftCommentResponse[segment] : ""}</span>
-        <span class="en-comment-text" lang="en">${comment_text[segment] ? comment_text[segment] : ""}</span>
+        ${draftCommentResponse ? `<span class="comment-text" lang="${translationLanguage}">${draftCommentResponse[segment] ? draftCommentResponse[segment] : ""}</span>` : ""}
+        ${comment_text ? `<span class="en-comment-text" lang="en">${comment_text[segment] ? comment_text[segment] : ""}</span>` : ""}
         </span>${closeHtml}\n\n`;
       });
 
