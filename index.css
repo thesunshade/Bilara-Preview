@@ -377,10 +377,20 @@ blockquote {
   display: none
 }
 
+.hide-comments .comment-text {
+  display: none
+}
+
 .eng-lang {
   font-size: .9rem;
   display: block;
   color: var(--dark-gray);
+}
+
+.comment-text {
+  font-size: .8rem;
+  display: block;
+  color: var(--light-gray);
 }
 
 .dark .eng-lang {

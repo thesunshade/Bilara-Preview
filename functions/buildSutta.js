@@ -1,12 +1,14 @@
 import { findGitHubDirectory } from "./findGitHubDirectory.js";
 import { toggleTheEnglish } from "./toggleTheEnglish.js";
+import { toggleTheComments } from "./toggleTheComments.js";
 import { toggleTheIds } from "./toggleTheIds.js";
 import { toggleThePali } from "./toggleThePali.js";
 import { suttaArea, INSTRUCTION_TEXT } from "../index.js";
 import { updateToolUrls } from "./updateToolUrls.js";
 
 export function buildSutta(slug) {
-  let gitHubUrl = "";
+  let gitHubTranslationUrl = "";
+  let gitHubCommentsUrl = "";
 
   function cleanIds(id) {
     return id.replace(/^[a-z].+?\d+?:/, "");
@@ -19,20 +21,21 @@ export function buildSutta(slug) {
     const [uid, fileNameParts] = fileNameSplit;
     const [, languageCode, translatorCode] = fileNameParts.split("-");
     const gitHubDirectory = findGitHubDirectory(uid);
-    gitHubUrl = `https://raw.githubusercontent.com/suttacentral/bilara-data/unpublished/translation/${languageCode}/${translatorCode}/${gitHubDirectory}/${fileName}.json`;
+    gitHubTranslationUrl = `https://raw.githubusercontent.com/suttacentral/bilara-data/unpublished/translation/${languageCode}/${translatorCode}/${gitHubDirectory}/${fileName}.json`;
+    gitHubCommentsUrl = `https://raw.githubusercontent.com/suttacentral/bilara-data/unpublished/comment/${languageCode}/${translatorCode}/${gitHubDirectory}/${fileName}.json`;
   } else {
-    gitHubUrl = slug.replace(/%2F/g, "/").replace("https://github.com/suttacentral/bilara-data/blob/unpublished", "https://raw.githubusercontent.com/suttacentral/bilara-data/unpublished");
+    gitHubTranslationUrl = slug.replace(/%2F/g, "/").replace("https://github.com/suttacentral/bilara-data/blob/unpublished", "https://raw.githubusercontent.com/suttacentral/bilara-data/unpublished");
+    gitHubCommentsUrl = slug.replace(/%2F/g, "/").replace("https://github.com/suttacentral/bilara-data/blob/unpublished", "https://raw.githubusercontent.com/suttacentral/bilara-data/unpublished").replaceAll("translation", "comment");
   }
 
-  const uidArray = gitHubUrl.match(/([a-z0-9.-]+)_translation/);
+  const uidArray = gitHubTranslationUrl.match(/([a-z0-9.-]+)_translation/);
 
   if (!uidArray) {
     errorResponse();
   }
 
-  const translationLanguage = gitHubUrl.match(/translation\/([a-z]+)/)[1];
+  const translationLanguage = gitHubTranslationUrl.match(/translation\/([a-z]+)/)[1];
   const uid = uidArray[1];
-
   let translator = "";
 
   translator = "sujato";
@@ -45,19 +48,20 @@ export function buildSutta(slug) {
   let html = `<div class="button-area">
   <button id="hide-pali" class="hide-button">Toggle Pali</button>
   <button id="hide-english" class="hide-button">Toggle English</button>
+  <button id="hide-comments" class="hide-button">Toggle Comments</button>
   <button id="hide-ids" class="hide-button">Toggle Ids</button>
   </div>`;
 
-  const draftTranslationResponse = fetch(gitHubUrl).then(response => response.json());
+  const draftTranslationResponse = fetch(gitHubTranslationUrl).then(response => response.json());
+  const draftCommentResponse = fetch(gitHubCommentsUrl).then(response => response.json());
   const contentResponse = fetch(`https://suttacentral.net/api/bilarasuttas/${uid}/${translator}?lang=en`).then(response => response.json());
 
   const suttaplex = fetch(`https://suttacentral.net/api/suttas/${uid}/${translator}?lang=en&siteLanguage=en`).then(response => response.json());
 
-  Promise.all([draftTranslationResponse, contentResponse, suttaplex])
+  Promise.all([draftTranslationResponse, draftCommentResponse, contentResponse, suttaplex])
     .then(responses => {
-      const [draftTranslation, contentResponse, suttaplex] = responses;
-      const { html_text, translation_text, root_text, keys_order } = contentResponse;
-
+      const [draftTranslation, draftCommentResponse, contentResponse, suttaplex] = responses;
+      const { html_text, translation_text, root_text, keys_order, comment_text } = contentResponse;
       keys_order.forEach(segment => {
         if (draftTranslation[segment] === undefined) {
           draftTranslation[segment] = "";
@@ -69,6 +73,7 @@ export function buildSutta(slug) {
         <span class="pli-lang" lang="pi">${root_text[segment] ? root_text[segment] : ""}</span>
         <span class="eng-lang" lang="en">${translation_text[segment] ? translation_text[segment] : ""}</span>
         <span class="trans-lang" lang="${translationLanguage}"><span class="ids">${cleanIds(segment)} </span>${draftTranslation[segment]}</span>
+        <span class="comment-text" lang="${translationLanguage}">${draftCommentResponse[segment] ? draftCommentResponse[segment] : ""}</span>
         </span>${closeHtml}\n\n`;
       });
 
@@ -78,11 +83,12 @@ export function buildSutta(slug) {
       toggleThePali();
       toggleTheEnglish();
       toggleTheIds();
+      toggleTheComments();
       updateToolUrls(uid);
     })
     .catch(error => {
       errorResponse();
-      console.log(error);
+      console.error(error);
     });
   function errorResponse() {
     suttaArea.innerHTML = `<div class="instructions"><h1>Sorry,</h1><p> <code class="error">${decodeURIComponent(slug)}</code> is not a valid URL or it is somehow not compatible with this previewer app.
