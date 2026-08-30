@@ -22,14 +22,20 @@ export function buildSutta(slug) {
   // If the Bilara app link is given, it gets transformed into a GitHub link
 
   if (/bilara\./.test(slug)) {
-    // transform bilara slug to githubUrl
+    const urlObj = new URL(slug);
+    const uid = urlObj.searchParams.get("prefix"); // "sn2.11"
+    const muid = urlObj.searchParams.get("muid"); // "translation-sr-brankokovacevic"
 
-    const fileName = slug.match(/translation\/(.+$)/)[1];
-    const fileNameSplit = fileName.split(/_/);
-    const [uid, fileNameParts] = fileNameSplit;
-    const [, languageCode, translatorCode] = fileNameParts.split("-");
+    console.log(uid, muid);
+
+    const fileName = `${uid}_${muid}`;
+    const [, languageCode, translatorCode] = muid.split("-");
+
+    console.log(languageCode, translatorCode);
+
     const gitHubDirectory = findGitHubDirectory(uid);
     gitHubTranslationUrl = `https://raw.githubusercontent.com/suttacentral/bilara-data/unpublished/translation/${languageCode}/${translatorCode}/${gitHubDirectory}/${fileName}.json`;
+
     const commentFileName = fileName.replace("translation", "comment");
     gitHubCommentsUrl = `https://raw.githubusercontent.com/suttacentral/bilara-data/unpublished/comment/${languageCode}/${translatorCode}/${gitHubDirectory}/${commentFileName}.json`;
   } else {
